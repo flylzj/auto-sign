@@ -1,0 +1,30 @@
+name: 'auto sign'
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 17 * * *'
+
+jobs:
+  auth_sign:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Checkout codes'
+      uses: actions/setup-node@master
+    - name: 'Set python'
+      uses: actions/setup-python@v1
+      with:
+        python-version: '3.x'
+    - name: 'Install dependencies'
+      run: python -m pip install --upgrade -r requirements.txt
+    - name: 'auth sign'
+      env:
+        T00LS_USERNAME: ${{ secrets.T00LS_USERNAME }}
+        T00LS_PASSWORD: ${{ secrets.T00LS_PASSWORD }}
+        T00LS_MD5: ${{ secrets.T00LS_MD5 }}
+        T00LS_QID: ${{ secrets.T00LS_QID }}
+        T00LS_QANS: ${{ secrets.T00LS_QANS }}
+        T00LS_SCKEY: ${{ secrets.T00LS_SCKEY }}
+      run: python index.py
