@@ -14,17 +14,14 @@ jobs:
     - name: 'Checkout codes'
       uses: actions/setup-node@master
     - name: 'Set python'
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v2
       with:
-        python-version: '3.x'
+        python-version: '3.7'
     - name: 'Install dependencies'
-      run: python -m pip install --upgrade -r requirements.txt
+      run: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
     - name: 'auth sign'
       env:
-        T00LS_USERNAME: ${{ secrets.T00LS_USERNAME }}
-        T00LS_PASSWORD: ${{ secrets.T00LS_PASSWORD }}
-        T00LS_MD5: ${{ secrets.T00LS_MD5 }}
-        T00LS_QID: ${{ secrets.T00LS_QID }}
-        T00LS_QANS: ${{ secrets.T00LS_QANS }}
-        T00LS_SCKEY: ${{ secrets.T00LS_SCKEY }}
+        YML_CONFIG: ${{ secrets.YML_CONFIG }}
       run: python index.py
