@@ -8,7 +8,7 @@ on:
     - cron: '0 17 * * *'
 
 jobs:
-  auth_sign:
+  auth-sign:
     runs-on: ubuntu-latest
     steps:
     - name: 'Checkout codes'
@@ -17,8 +17,6 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: '3.7'
-    - name: 'test'
-      run: ls -al
     - name: 'Install dependencies'
       run: |
         python -m pip install --upgrade pip
