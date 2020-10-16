@@ -6,10 +6,12 @@ import oss2
 import yaml
 import base64
 import requests
+import os
 from pyDes import des, CBC, PAD_PKCS5
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urlparse
 from urllib3.exceptions import InsecureRequestWarning
+from ftqq import msg_to_wechat
 
 # debug模式
 debug = False
@@ -26,8 +28,16 @@ def getYmlConfig(yaml_file='config.yml'):
     return dict(config)
 
 
+def get_yml_config_from_string(config_string):
+    config = yaml.load(config_string, Loader=yaml.FullLoader)
+    return dict(config)
+
+
+
 # 全局配置
-config = getYmlConfig(yaml_file='config.yml')
+# config = getYmlConfig(yaml_file='config.yml')
+config_string = os.environ["YML_CONFIG"]
+config = get_yml_config_from_string(config_string)
 
 
 # 获取当前utc时间，并格式化为北京时间
@@ -281,10 +291,14 @@ def submitForm(session, user, form, apis):
                        headers=headers, data=json.dumps(form), verify=not debug)
     message = res.json()['message']
     if message == 'SUCCESS':
-        log('自动签到成功')
-        sendMessage('自动签到成功', user['email'])
+        text = "自动签到成功"
+        log(text)
+        msg_to_wechat(SKEY=user['skey'], text=text)
+        # sendMessage('自动签到成功', user['email'])
     else:
-        log('自动签到失败，原因是：' + message)
+        text = '自动签到失败，原因是：' + message
+        log(text)
+        msg_to_wechat(SKEY=user['skey'], text=text)
         # sendMessage('自动签到失败，原因是：' + message, user['email'])
         exit(-1)
 
