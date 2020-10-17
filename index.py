@@ -137,9 +137,8 @@ def getSession(user, apis):
 
 
 def get_session_direct(user, api):
-    user = user['user']
     try:
-        cookie_str: str = get_cookie_direct(username=user["username"], password=user["password"])
+        cookie_str: str = get_cookie_direct(username=user['user']["username"], password=user['user']["password"])
         log("direct login success, cookie:" + cookie_str)
         cookies = {}
         for line in cookie_str.split(';'):

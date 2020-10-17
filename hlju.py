@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 # 直接请求黑大认证系统拿cookie
 def get_cookie_direct(username, password):
     session = requests.Session()
-    session.proxies = {"http": "http://127.0.0.1:8080"}
+    # session.proxies = {"http": "http://127.0.0.1:8080"}
     session.headers = {
         "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"
                       "86.0.4240.75 Safari/537.36"
