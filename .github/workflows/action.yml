@@ -5,12 +5,16 @@ on:
     branches:
       - master
   schedule:
-    - cron: '30 6-21/15 * * *'
+    - cron: '0 6-21/15 * * *'
 
 jobs:
   auto-sign:
     runs-on: ubuntu-latest
-    steps:
+#    steps:
+#    - name: 'Setup timezone'
+#      uses: zcong1993/setup-timezone@master
+#      with:
+#        timezone: Asia/Shanghai
     - name: 'Set python'
       uses: actions/setup-python@v2
       with:

