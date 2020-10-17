@@ -12,6 +12,7 @@ from datetime import datetime, timedelta, timezone
 from urllib.parse import urlparse
 from urllib3.exceptions import InsecureRequestWarning
 from ftqq import msg_to_wechat
+from hlju import get_cookie_direct
 
 # debug模式
 debug = False
@@ -29,6 +30,8 @@ def getYmlConfig(yaml_file='config.yml'):
 
 
 def get_yml_config_from_string(config_string):
+    if config_string == "":
+        return getYmlConfig("config.yml")
     config = yaml.load(config_string, Loader=yaml.FullLoader)
     return dict(config)
 
@@ -36,8 +39,7 @@ def get_yml_config_from_string(config_string):
 
 # 全局配置
 # config = getYmlConfig(yaml_file='config.yml')
-config_string = os.environ["YML_CONFIG"]
-print(datetime.now())
+config_string = os.environ.get("YML_CONFIG") or ""
 config = get_yml_config_from_string(config_string)
 
 
@@ -132,6 +134,24 @@ def getSession(user, apis):
     session = requests.session()
     session.cookies = requests.utils.cookiejar_from_dict(cookies, cookiejar=None, overwrite=True)
     return session
+
+
+def get_session_direct(user, api):
+    user = user['user']
+    try:
+        cookie_str: str = get_cookie_direct(username=user["username"], password=user["password"])
+        log("direct login success, cookie:" + cookie_str)
+        cookies = {}
+        for line in cookie_str.split(';'):
+            name, value = line.strip().split('=', 1)
+            cookies[name] = value
+        session = requests.session()
+        session.cookies = requests.utils.cookiejar_from_dict(cookies, cookiejar=None, overwrite=True)
+        return session
+    except Exception as e:
+        log("direct login err")
+        log(str(e))
+    return getSession(user, api)
 
 
 # 获取最新未签到任务
@@ -323,7 +343,7 @@ def sendMessage(msg, email):
 def main():
     for user in config['users']:
         apis = getCpdailyApis(user)
-        session = getSession(user, apis)
+        session = get_session_direct(user, apis)
         params = getUnSignedTasks(session, apis)
         task = getDetailTask(session, params, apis)
         form = fillForm(task, session, user, apis)
