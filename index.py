@@ -37,6 +37,7 @@ def get_yml_config_from_string(config_string):
 # 全局配置
 # config = getYmlConfig(yaml_file='config.yml')
 config_string = os.environ["YML_CONFIG"]
+print(config_string)
 config = get_yml_config_from_string(config_string)
 
 
