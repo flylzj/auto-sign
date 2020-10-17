@@ -238,6 +238,7 @@ def fillForm(task, session, user, apis):
     form['isMalposition'] = task['isMalposition']
     form['abnormalReason'] = user['abnormalReason']
     form['position'] = user['address']
+    log(form)
     return form
 
 
