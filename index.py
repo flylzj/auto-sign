@@ -177,8 +177,8 @@ def getUnSignedTasks(session, apis):
     # log(res.json())
     latestTask = res.json()['datas']['unSignedTasks'][0]
     return {
-        'signInstanceWid': latestTask['signInstanceWid'],
-        'signWid': latestTask['signWid']
+        'signInstanceWid': "15743962",  # latestTask['signInstanceWid'],
+        'signWid': "513900",  # latestTask['signWid']
     }
 
 
