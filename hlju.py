@@ -43,5 +43,6 @@ def get_cookie_direct(username, password):
     cpdaily_session = requests.Session()
 
     r = cpdaily_session.get(cpdaily_url)
+
     return r.request.headers.get("cookie")
 
