@@ -139,7 +139,8 @@ def getSession(user, apis):
 def get_session_direct(user, api):
     try:
         cookie_str: str = get_cookie_direct(username=user['user']["username"], password=user['user']["password"])
-        cookie_str = None
+        if "MOD_AUTH_CAS" not in cookie_str:
+            cookie_str = None
         log("direct login success, cookie:" + cookie_str)
         cookies = {}
         for line in cookie_str.split(';'):
