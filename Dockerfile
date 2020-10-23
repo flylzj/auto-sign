@@ -17,5 +17,5 @@ RUN chmod +x /endpoint.sh
 
 WORKDIR /app
 
-ENTRYPOINT ["/endpoint.sh"]
+CMD ["python3", "index.py"]
 
