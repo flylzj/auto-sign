@@ -367,5 +367,5 @@ def main_handler(event, context):
 if __name__ == '__main__':
     # print(extension)
     sche = BlockingScheduler()
-    sche.add_job(main_handler, 'cron', args=({}, {}), hour="*", minute="1")
+    sche.add_job(main_handler, 'cron', args=({}, {}), hour="6,9", minute="5")
     sche.start()
