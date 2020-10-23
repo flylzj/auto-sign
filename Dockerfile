@@ -1,7 +1,9 @@
 FROM python:3.7-alpine
 
 RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
-RUN apk add --no-cache --update gcc libc-dev openssl-dev
+RUN apk add --no-cache --update gcc libc-dev openssl-dev rzdata
+
+RUN echo "Asia/Shanghai" > /etc/timezone
 
 WORKDIR /
 
