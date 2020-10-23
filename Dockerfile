@@ -6,7 +6,7 @@ COPY requirements.txt /req.txt
 
 COPY . /app
 
-RUN pip install -r req.txt
+RUN pip install  -i https://pypi.tuna.tsinghua.edu.cn/simple -r req.txt
 
 COPY endpoint.sh /endpoint.sh
 

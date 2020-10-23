@@ -55,7 +55,3 @@ def get_cookie_direct(username, password):
 
     return r.request.headers.get("cookie")
 
-
-if __name__ == '__main__':
-    print(get_cookie_direct('20190762', '264547'))
-
