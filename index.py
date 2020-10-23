@@ -13,6 +13,7 @@ from urllib.parse import urlparse
 from urllib3.exceptions import InsecureRequestWarning
 from ftqq import msg_to_wechat
 from hlju import get_cookie_direct
+from apscheduler.schedulers.blocking import BlockingScheduler
 
 # debug模式
 debug = False
@@ -365,4 +366,6 @@ def main_handler(event, context):
 
 if __name__ == '__main__':
     # print(extension)
-    print(main_handler({}, {}))
+    sche = BlockingScheduler()
+    sche.add_job(main_handler, 'cron', args=({}, {}), hour="*", minute="1")
+    sche.start()
