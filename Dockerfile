@@ -6,9 +6,11 @@ COPY requirements.txt /req.txt
 
 COPY . /app
 
-RUN pip -r install req.txt
+RUN pip install -r req.txt
 
 COPY endpoint.sh /endpoint.sh
+
+RUN chmod +x /endpoint.sh
 
 WORKDIR /app
 
