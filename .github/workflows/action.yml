@@ -1,0 +1,31 @@
+name: 'auto sign'
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '5 13,22 * * *'
+
+jobs:
+  auto-sign:
+    runs-on: ubuntu-latest
+    steps:
+    - name: 'Setup timezone '
+      uses: zcong1993/setup-timezone@master
+      with:
+        timezone: Asia/Shanghai
+    - name: 'Set python'
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.7'
+    - name: 'Checkout codes'
+      uses: actions/checkout@master
+    - name: 'Install dependencies'
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: 'auto sign'
+      env:
+        YML_CONFIG: ${{ secrets.YML_CONFIG }}
+      run: python index.py
