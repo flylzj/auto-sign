@@ -172,7 +172,7 @@ def getUnSignedTasks(session, apis):
         headers=headers, data=json.dumps({}), verify=not debug)
     # 第二次请求每日签到任务接口，拿到具体的签到任务
     res = session.post(
-        url='https://{host}/wec-counselor-sign-apps/stu/sign/getStuSignInfosInOneDay'.format(host=apis['host']),
+        url='https://{host}/wec-counselor-sign-apps/stu/sign/queryDailySginTasks'.format(host=apis['host']),
         headers=headers, data=json.dumps({}), verify=not debug)
     if len(res.json()['datas']['unSignedTasks']) < 1:
         log('当前没有未签到任务')
@@ -196,7 +196,7 @@ def getDetailTask(session, params, apis):
         'Content-Type': 'application/json;charset=UTF-8'
     }
     res = session.post(
-        url='https://{host}/wec-counselor-sign-apps/stu/sign/detailSignInstance'.format(host=apis['host']),
+        url='https://{host}/wec-counselor-sign-apps/stu/sign/detailSignTaskInst'.format(host=apis['host']),
         headers=headers, data=json.dumps(params), verify=not debug)
     data = res.json()['datas']
     return data
@@ -311,7 +311,7 @@ def submitForm(session, user, form, apis):
         # 'Host': 'swu.cpdaily.com',
         'Connection': 'Keep-Alive'
     }
-    res = session.post(url='https://{host}/wec-counselor-sign-apps/stu/sign/submitSign'.format(host=apis['host']),
+    res = session.post(url='https://{host}/wec-counselor-sign-apps/stu/sign/completeSignIn'.format(host=apis['host']),
                        headers=headers, data=json.dumps(form), verify=not debug)
     message = res.json()['message']
     if message == 'SUCCESS':
@@ -366,7 +366,8 @@ def main_handler(event, context):
 
 if __name__ == '__main__':
     # print(extension)
+    main_handler({},{})
     sche = BlockingScheduler()
     log("")
-    sche.add_job(main_handler, 'cron', args=({}, {}), hour="6,9", minute="5")
+    sche.add_job(main_handler, 'cron', args=({}, {}), hour="6,21", minute="5")
     sche.start()
